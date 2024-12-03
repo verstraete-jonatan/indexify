@@ -54,19 +54,23 @@ function generateIndexFileContent(dir, supportedExtensions, indexFileName) {
  * @param {string} indexFileName - Name of the index file
  */
 function generateIndexFiles(rootPath, supportedExtensions, indexFileName) {
-  const indexFiles = findIndexFiles(rootPath, indexFileName);
+  try {
+    const indexFiles = findIndexFiles(rootPath, indexFileName);
+    indexFiles.forEach((indexFile) => {
+      const dir = path.dirname(indexFile);
+      const content = generateIndexFileContent(
+        dir,
+        supportedExtensions,
+        indexFileName
+      );
 
-  indexFiles.forEach((indexFile) => {
-    const dir = path.dirname(indexFile);
-    const content = generateIndexFileContent(
-      dir,
-      supportedExtensions,
-      indexFileName
-    );
-
-    fs.writeFileSync(indexFile, content, "utf8");
-    console.log(`Populated: ${indexFile}`);
-  });
+      fs.writeFileSync(indexFile, content, "utf8");
+      console.log(`Populated: ${indexFile}`);
+    });
+  } catch (e) {
+    console.log("Error", e);
+    process.exit(1);
+  }
 }
 
 module.exports = {

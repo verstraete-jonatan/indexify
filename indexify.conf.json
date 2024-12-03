@@ -1,6 +1,6 @@
 {
   "supportedExtensions": [".ts"],
   "rootPath": "src",
-  "indexFileName": "_index.ts",
+  "indexFileName": "index.ts",
   "watch": false
 }
