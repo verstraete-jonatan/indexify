@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { generateIndexFiles } = require("../src/indexify"); // Import the core functionality
+const { generateIndexFiles } = require("../scripts/indexify"); // Import the core functionality
 
 // Path to the configuration file
 const configPath = path.resolve(process.cwd(), "indexify.conf.json");

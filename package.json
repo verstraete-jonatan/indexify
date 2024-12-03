@@ -2,13 +2,13 @@
   "name": "indexify",
   "version": "1.0.0",
   "description": "A CLI tool to automatically generate and maintain index files in your project.",
-  "main": "src/index.js",
+  "main": "./scripts/indexify.js",
   "bin": {
     "indexify": "./bin/indexify.js"
   },
   "scripts": {
     "postinstall": "node ./scripts/createConfig.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "node tests/indexfy.integration.test"
   },
   "keywords": [
     "typescript",

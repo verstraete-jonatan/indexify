@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const chokidar = require("chokidar");
-const { generateIndexFiles } = require("../src/indexify");
+const { generateIndexFiles } = require("../scripts/indexify");
 
 // Load configuration
 const configPath = path.resolve(process.cwd(), "indexify.conf.json");
