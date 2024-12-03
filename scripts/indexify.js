@@ -1,6 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
+const dateToday = new Date().toDateString();
+const indexFileMessage =
+  "/** Auto generated with `indexify` @link.. \n" +
+  `Last updated: ${dateToday} */\n\n`;
+
 /**
  * Recursively find all index files in a directory
  * @param {string} dir - Root directory
@@ -58,7 +63,8 @@ function generateIndexFiles(rootPath, supportedExtensions, indexFileName) {
     const indexFiles = findIndexFiles(rootPath, indexFileName);
     indexFiles.forEach((indexFile) => {
       const dir = path.dirname(indexFile);
-      const content = generateIndexFileContent(
+      let content = indexFileMessage;
+      content += generateIndexFileContent(
         dir,
         supportedExtensions,
         indexFileName

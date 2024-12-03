@@ -7,9 +7,6 @@ const { generateIndexFiles } = require("../scripts/indexify"); // Import the cor
 // Path to the configuration file
 const configPath = path.resolve(process.cwd(), "indexify.conf.json");
 
-console.log({ configPath });
-process.exit(0);
-
 // Check if the configuration exists
 if (!fs.existsSync(configPath)) {
   console.error(
