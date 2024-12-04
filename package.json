@@ -8,6 +8,7 @@
   },
   "scripts": {
     "postinstall": "node ./scripts/createConfig.js",
+    "indexify": "node ./bin/indexify.js",
     "test": "node tests/indexfy.integration.test"
   },
   "keywords": [
