@@ -30,6 +30,24 @@ function findIndexFiles(dir, indexFileName) {
   return results;
 }
 
+function getAllDirPaths(dir = "src") {
+  const allPaths = [];
+  const items = fs.readdirSync(dir);
+
+  allPaths.push(dir);
+
+  items.forEach((item) => {
+    const filePath = path.join(dir, item);
+    const _path = fs.statSync(filePath);
+
+    if (_path.isDirectory()) {
+      allPaths.push(...getAllDirPaths(filePath));
+    }
+  });
+
+  return [...new Set(allPaths)];
+}
+
 /**
  * Generate index file content
  * @param {string} dir - Directory of the index file
@@ -52,6 +70,18 @@ function generateIndexFileContent(dir, supportedExtensions, indexFileName) {
   return exports.join("\n") + "\n";
 }
 
+function removeIndexFiles(dir, indexFileName) {
+  fs.readdirSync(dir).forEach((file) => {
+    const filePath = path.join(dir, file);
+    fs.unlinkSync(filePath);
+    if (fs.statSync(filePath).isDirectory()) {
+      removeIndexFiles(filePath, indexFileName);
+    } else if (file === indexFileName) {
+      fs.unlinkSync(filePath);
+    }
+  });
+}
+
 /**
  * Populate index files
  * @param {string} rootPath - Root directory to process
@@ -59,8 +89,16 @@ function generateIndexFileContent(dir, supportedExtensions, indexFileName) {
  * @param {string} indexFileName - Name of the index file
  */
 function generateIndexFiles(rootPath, supportedExtensions, indexFileName) {
+  return;
+  if (!indexFileName) {
+    console.log("no indexFileName");
+    process.exit(1);
+  }
   try {
-    const indexFiles = findIndexFiles(rootPath, indexFileName);
+    const allDirs = getAllDirPaths(rootPath, indexFileName);
+    const indexFiles = allDirs.map((_dir) => `${_dir}/${indexFileName}`);
+
+    console.log(indexFiles);
     indexFiles.forEach((indexFile) => {
       const dir = path.dirname(indexFile);
       let content = indexFileMessage;
@@ -69,8 +107,11 @@ function generateIndexFiles(rootPath, supportedExtensions, indexFileName) {
         supportedExtensions,
         indexFileName
       );
+      console.log(indexFile);
+      // if (!fs.existsSync(indexFile)) {
 
       fs.writeFileSync(indexFile, content, "utf8");
+
       console.log(`Populated: ${indexFile}`);
     });
   } catch (e) {

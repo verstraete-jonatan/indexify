@@ -7,7 +7,7 @@
     "indexify": "./bin/indexify.js"
   },
   "scripts": {
-    "postinstall": "node ./scripts/createConfig.js",
+    "postinstall": "node ./scripts/generate_indexes.js",
     "indexify": "node ./bin/indexify.js",
     "test": "node tests/indexfy.integration.test"
   },
